@@ -1,6 +1,7 @@
 package HalvaBanna;
 
 import HalvaBanna.models.Graph;
+import HalvaBanna.models.ShortestPath;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -34,6 +35,13 @@ public class Main {
                 // use dfs from first index
                 graph.DFS(0);
                 System.out.println();
+            }
+            else if (Objects.equals(command, "test2")) {
+                ShortestPath shortestPath = new ShortestPath(graph);
+                shortestPath.dijkstra(graph.getAdj(), 0);
+                for (int i = 0; i < shortestPath.getDist().length; i++)
+                    System.out.println(0 + " to " + i + " is "
+                            + shortestPath.getDist()[i]);
             }
             command = sc.next();
         }
