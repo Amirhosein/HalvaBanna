@@ -1,7 +1,8 @@
 package HalvaBanna;
 
-import HalvaBanna.models.Graph;
+import HalvaBanna.models.FairPlace;
 import HalvaBanna.models.ShortestPath;
+import HalvaBanna.models.graph.Graph;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -29,19 +30,21 @@ public class Main {
             int w = sc.nextInt();
             graph.addEdge(u, v, w);
         }
+        ShortestPath shortestPath = new ShortestPath(graph);
+
         command = sc.next();
         while (!Objects.equals(command, "exit")) {
             if (Objects.equals(command, "test")) {
-                // use dfs from first index
-                graph.DFS(0);
+                ShortestPath.getGraph().DFS(10);
                 System.out.println();
-            }
-            else if (Objects.equals(command, "test2")) {
-                ShortestPath shortestPath = new ShortestPath(graph);
-                shortestPath.dijkstra(graph.getAdj(), 0);
-                for (int i = 0; i < shortestPath.getDist().length; i++)
-                    System.out.println(0 + " to " + i + " is "
-                            + shortestPath.getDist()[i]);
+            } else if (Objects.equals(command, "test1")) {
+                if (!ShortestPath.getGraph().isCalculated())
+                    shortestPath.dijkstra();
+                shortestPath.printResult();
+            } else if (Objects.equals(command, "test2")) {
+                if (!ShortestPath.getGraph().isCalculated())
+                    shortestPath.dijkstra();
+                FairPlace.findFairPlace();
             }
             command = sc.next();
         }
