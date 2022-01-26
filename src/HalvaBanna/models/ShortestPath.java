@@ -32,8 +32,13 @@ public class ShortestPath {
 
     public void printResult() {
         for (int i = 0; i < V; i++) {
-            System.out.println("Vertex: " + i);
-            System.out.println(adj.get(i).getDijkstraResult());
+            System.out.println("Vertex: " + graph.getKey(i));
+
+            for (int j = 0; j < V; j++) {
+                System.out.print("\t" + graph.getKey(j) + ": " + graph.getAdj().get(i).getDijkstraResult().get(j));
+
+            }
+            System.out.println();
         }
     }
 

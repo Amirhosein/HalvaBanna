@@ -2,6 +2,7 @@ package HalvaBanna.models;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class FairPlace {
     public static void findFairPlace() {
@@ -48,11 +49,17 @@ public class FairPlace {
             }
         }
 
-        // print minimum fair score
-        System.out.println("Vertex " + ShortestPath.getGraph().getKey(minFairScoreIndex) + " fair score: " + minFairScore);
-        // print fair scores
+        System.out.println("FairPlaces:");
         for (int i = 0; i < ShortestPath.getGraph().getV(); i++) {
-            System.out.println("Vertex " + ShortestPath.getGraph().getKey(i) + " fair score: " + fairScores[i]);
+            if (Objects.equals(fairScores[i], minFairScore)) {
+                System.out.println("Vertex " + ShortestPath.getGraph().getKey(i) + " fair score: " + fairScores[i]);
+            }
+        }
+        System.out.println("Other vertices:");
+        for (int i = 0; i < ShortestPath.getGraph().getV(); i++) {
+            if (!Objects.equals(fairScores[i], minFairScore)) {
+                System.out.println("Vertex " + ShortestPath.getGraph().getKey(i) + " fair score: " + fairScores[i]);
+            }
         }
     }
 
