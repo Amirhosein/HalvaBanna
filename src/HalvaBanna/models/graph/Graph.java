@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Graph {
-    private int V;
-    private boolean isCalculated;
+    private final int V;
     private final ArrayList<Vertex> adj;
+    private boolean isCalculated;
     private HashMap<Integer, Integer> verticesMap;
 
-    @SuppressWarnings("unchecked")
     public Graph(int V) {
         this.V = V;
         this.adj = new ArrayList<>();
@@ -19,10 +18,6 @@ public class Graph {
             this.adj.add(new Vertex());
         }
         this.isCalculated = false;
-    }
-
-    public HashMap<Integer, Integer> getVerticesMap() {
-        return verticesMap;
     }
 
     public void setVerticesMap(HashMap<Integer, Integer> verticesMap) {
@@ -35,23 +30,6 @@ public class Graph {
 
     public int getV() {
         return V;
-    }
-
-    public void setV(int v) {
-        V = v;
-    }
-
-    public void addVertex(Vertex vertex) {
-        this.adj.add(vertex);
-        this.V++;
-        this.isCalculated = false;
-    }
-
-    public void removeVertex(Vertex vertex) {
-        this.adj.remove(vertex);
-        this.V--;
-
-        this.isCalculated = false;
     }
 
     public void addEdge(int u, int v, int weight) {
@@ -80,7 +58,7 @@ public class Graph {
     }
 
     public boolean isCalculated() {
-        return isCalculated;
+        return !isCalculated;
     }
 
     public void setCalculated(boolean calculated) {

@@ -4,7 +4,10 @@ import HalvaBanna.models.FairPlace;
 import HalvaBanna.models.ShortestPath;
 import HalvaBanna.models.graph.Graph;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,24 +37,24 @@ public class Main {
         command = sc.next();
         while (!Objects.equals(command, "exit")) {
             if (Objects.equals(command, "test")) {
-                ShortestPath.getGraph().DFS(10);
+                ShortestPath.getGraph().DFS(graph.getKey(0));
                 System.out.println();
             } else if (Objects.equals(command, "test1")) {
-                if (!ShortestPath.getGraph().isCalculated())
+                if (ShortestPath.getGraph().isCalculated())
                     shortestPath.dijkstra();
                 shortestPath.printResult();
             } else if (Objects.equals(command, "test2")) {
-                if (!ShortestPath.getGraph().isCalculated())
+                if (ShortestPath.getGraph().isCalculated())
                     shortestPath.dijkstra();
                 FairPlace.findFairPlace();
             } else if (Objects.equals(command, "join")) {
                 attendees.add(sc.nextInt());
-                if (!ShortestPath.getGraph().isCalculated())
+                if (ShortestPath.getGraph().isCalculated())
                     shortestPath.dijkstra();
                 FairPlace.findFairPlace(attendees);
             } else if (Objects.equals(command, "left")) {
                 attendees.remove(sc.nextInt());
-                if (!ShortestPath.getGraph().isCalculated())
+                if (ShortestPath.getGraph().isCalculated())
                     shortestPath.dijkstra();
                 FairPlace.findFairPlace(attendees);
             }

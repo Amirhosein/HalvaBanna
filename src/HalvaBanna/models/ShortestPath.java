@@ -11,8 +11,8 @@ import java.util.Set;
 
 public class ShortestPath {
     private static Graph graph;
-    private int V;
-    private int dist[];
+    private final int V;
+    private int[] dist;
     private Set<Integer> settled;
     private PriorityQueue<Node> pq;
     private ArrayList<Vertex> adj;
@@ -22,16 +22,12 @@ public class ShortestPath {
         ShortestPath.graph = graph;
         this.adj = graph.getAdj();
         this.dist = new int[V];
-        this.settled = new HashSet<Integer>();
-        this.pq = new PriorityQueue<Node>(V, new Node());
+        this.settled = new HashSet<>();
+        this.pq = new PriorityQueue<>(V, new Node());
     }
 
     public static Graph getGraph() {
         return graph;
-    }
-
-    public void setGraph(Graph graph) {
-        ShortestPath.graph = graph;
     }
 
     public void printResult() {
@@ -70,16 +66,16 @@ public class ShortestPath {
             dijkstraUtil(adj, i);
             adj.get(i).setDijkstraResult(dist);
             this.dist = new int[V];
-            this.settled = new HashSet<Integer>();
-            this.pq = new PriorityQueue<Node>(V, new Node());
+            this.settled = new HashSet<>();
+            this.pq = new PriorityQueue<>(V, new Node());
         }
         graph.setCalculated(true);
     }
 
     private void e_Neighbours(int u) {
 
-        int edgeDistance = -1;
-        int newDistance = -1;
+        int edgeDistance;
+        int newDistance;
         for (int i = 0; i < adj.get(u).getAdj().size(); i++) {
             Node v = adj.get(u).getAdj().get(i);
 
@@ -95,7 +91,4 @@ public class ShortestPath {
         }
     }
 
-    public int[] getDist() {
-        return dist;
-    }
 }

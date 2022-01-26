@@ -11,11 +11,11 @@ public class Node implements Comparator<Node> {
     // Constructors of this class
 
     // Constructor 1
-    public Node() {}
+    public Node() {
+    }
 
     // Constructor 2
-    public Node(int node, int cost)
-    {
+    public Node(int node, int cost) {
 
         // This keyword refers to current instance itself
         this.node = node;
@@ -23,8 +23,8 @@ public class Node implements Comparator<Node> {
     }
 
     // Method 1
-    @Override public int compare(Node node1, Node node2)
-    {
+    @Override
+    public int compare(Node node1, Node node2) {
 
         return Integer.compare(node1.cost, node2.cost);
 
