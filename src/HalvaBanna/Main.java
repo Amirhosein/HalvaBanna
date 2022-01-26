@@ -4,14 +4,13 @@ import HalvaBanna.models.FairPlace;
 import HalvaBanna.models.ShortestPath;
 import HalvaBanna.models.graph.Graph;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         int n, m;
         String command;
+        HashSet<Integer> attendees = new HashSet<>();
         HashMap<Integer, Integer> map = new HashMap<>();
         Scanner sc = new Scanner(System.in);
 
@@ -45,6 +44,16 @@ public class Main {
                 if (!ShortestPath.getGraph().isCalculated())
                     shortestPath.dijkstra();
                 FairPlace.findFairPlace();
+            } else if (Objects.equals(command, "join")) {
+                attendees.add(sc.nextInt());
+                if (!ShortestPath.getGraph().isCalculated())
+                    shortestPath.dijkstra();
+                FairPlace.findFairPlace(attendees);
+            } else if (Objects.equals(command, "left")) {
+                attendees.remove(sc.nextInt());
+                if (!ShortestPath.getGraph().isCalculated())
+                    shortestPath.dijkstra();
+                FairPlace.findFairPlace(attendees);
             }
             command = sc.next();
         }
