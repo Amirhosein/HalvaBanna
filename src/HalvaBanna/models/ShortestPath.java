@@ -1,82 +1,96 @@
 package HalvaBanna.models;
 
-import java.util.*;
+import HalvaBanna.models.graph.Graph;
+import HalvaBanna.models.graph.Node;
+import HalvaBanna.models.graph.Vertex;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 public class ShortestPath {
+    private static Graph graph;
     private int V;
     private int dist[];
     private Set<Integer> settled;
-    private PriorityQueue<Graph.Node> pq;
-    private Vector<Graph.Node>[] adj;
+    private PriorityQueue<Node> pq;
+    private ArrayList<Vertex> adj;
 
-    public ShortestPath(Graph graph){
+    public ShortestPath(Graph graph) {
         this.V = graph.getV();
-        dist = new int[V];
-        settled = new HashSet<Integer>();
-        pq = new PriorityQueue<Graph.Node>(V, new Graph.Node());
+        ShortestPath.graph = graph;
+        this.adj = graph.getAdj();
+        this.dist = new int[V];
+        this.settled = new HashSet<Integer>();
+        this.pq = new PriorityQueue<Node>(V, new Node());
     }
 
-    public void dijkstra(Vector<Graph.Node>[] adj, int src)
-    {
+    public static Graph getGraph() {
+        return graph;
+    }
+
+    public void setGraph(Graph graph) {
+        ShortestPath.graph = graph;
+    }
+
+    public void printResult() {
+        for (int i = 0; i < V; i++) {
+            System.out.println("Vertex: " + i);
+            System.out.println(adj.get(i).getDijkstraResult());
+        }
+    }
+
+    public void dijkstraUtil(ArrayList<Vertex> adj, int src) {
         this.adj = adj;
 
         for (int i = 0; i < V; i++)
             dist[i] = Integer.MAX_VALUE;
 
-        // Add source node to the priority queue
-        pq.add(new Graph.Node(src, 0));
+        pq.add(new Node(src, 0));
 
-        // Distance to the source is 0
         dist[src] = 0;
 
         while (settled.size() != V) {
-
-            // Terminating condition check when
-            // the priority queue is empty, return
             if (pq.isEmpty())
                 return;
-
-            // Removing the minimum distance node
-            // from the priority queue
             int u = pq.remove().node;
 
-            // Adding the node whose distance is
-            // finalized
             if (settled.contains(u))
-
-                // Continue keyword skips execution for
-                // following check
                 continue;
 
-            // We don't have to call e_Neighbors(u)
-            // if u is already present in the settled set.
             settled.add(u);
 
             e_Neighbours(u);
         }
     }
 
-    private void e_Neighbours(int u)
-    {
+    public void dijkstra() {
+        for (int i = 0; i < V; i++) {
+            dijkstraUtil(adj, i);
+            adj.get(i).setDijkstraResult(dist);
+            this.dist = new int[V];
+            this.settled = new HashSet<Integer>();
+            this.pq = new PriorityQueue<Node>(V, new Node());
+        }
+        graph.setCalculated(true);
+    }
+
+    private void e_Neighbours(int u) {
 
         int edgeDistance = -1;
         int newDistance = -1;
+        for (int i = 0; i < adj.get(u).getAdj().size(); i++) {
+            Node v = adj.get(u).getAdj().get(i);
 
-        // All the neighbors of v
-        for (int i = 0; i < adj[u].size(); i++) {
-            Graph.Node v = adj[u].get(i);
-
-            // If current node hasn't already been processed
-            if (!settled.contains(v.node)) {
+            if (!settled.contains(graph.getName(v.node))) {
                 edgeDistance = v.cost;
                 newDistance = dist[u] + edgeDistance;
+                if (newDistance < dist[graph.getName(v.node)]) {
+                    dist[graph.getName(v.node)] = newDistance;
+                }
 
-                // If new distance is cheaper in cost
-                if (newDistance < dist[v.node])
-                    dist[v.node] = newDistance;
-
-                // Add the current node to the queue
-                pq.add(new Graph.Node(v.node, dist[v.node]));
+                pq.add(new Node(graph.getName(v.node), dist[graph.getName(v.node)]));
             }
         }
     }
