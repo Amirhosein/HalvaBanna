@@ -41,11 +41,9 @@ public class FairPlace {
 
         // find minimum fair score
         Double minFairScore = Double.MAX_VALUE;
-        int minFairScoreIndex = 0;
         for (int i = 0; i < ShortestPath.getGraph().getV(); i++) {
             if (fairScores[i] < minFairScore) {
                 minFairScore = fairScores[i];
-                minFairScoreIndex = i;
             }
         }
 
